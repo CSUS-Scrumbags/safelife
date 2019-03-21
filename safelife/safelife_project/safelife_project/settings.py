@@ -33,15 +33,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'administrator.apps.AdministratorConfig',
     'teacher.apps.TeacherConfig',
+    'attendance.apps.AttendanceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'attendance',
-    'student',
-    'classes'
 ]
 
 MIDDLEWARE = [
@@ -79,10 +77,6 @@ WSGI_APPLICATION = 'safelife_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangoproject',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
