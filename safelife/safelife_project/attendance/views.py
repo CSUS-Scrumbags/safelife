@@ -98,7 +98,6 @@ def update_student_absent(request):
             cursor.execute('UPDATE attendances '
                            'SET status = "Absent" '
                            'WHERE students = %s AND date = %s', [student_data.student_id, date])
-    print('Hello')
     # Render the response to the user
     return render(request, 'index.html', {})
 
