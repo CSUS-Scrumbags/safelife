@@ -78,10 +78,27 @@ def update_student_absent(request):
     student_data = Student.objects.get(student_name=name)
     # Create a cursor to execute raw SQL queries.
     with connection.cursor() as cursor:
-        # Change the students attendance status from Absent to 'Makeup: <date>'
-        cursor.execute('UPDATE attendances '
-                       'SET status = "Makeup: " %s'
-                       'WHERE students = %s AND date = %s', [currentdate, student_data.student_id, date])
+        # Get the students attendance status
+        cursor.execute('SELECT A.status ' 
+                       'FROM students as S, classes as CL, attendances as A '
+                       'WHERE CL.course_id = "301" AND S.student_id = A.students '
+                       'AND CL.course_id = A.classes AND CL.date = A.date '
+                       'AND A.date = %s AND S.student_name = %s', [date, student_data.student_name])
+        # attendance_status is a tuple containing the students attendance status
+        attendance_status = cursor.fetchone()
+    # Create a cursor to execute raw SQL queries.
+    with connection.cursor() as cursor:
+        if attendance_status[0] == 'Absent':
+            # Change the students attendance status from Absent to 'Makeup: <date>'
+            cursor.execute('UPDATE attendances '
+                           'SET status = "Makeup: " %s'
+                           'WHERE students = %s AND date = %s', [currentdate, student_data.student_id, date])
+        else:
+            # Change the students attendance status from 'Makeup: <date>' to Absent
+            cursor.execute('UPDATE attendances '
+                           'SET status = "Absent" '
+                           'WHERE students = %s AND date = %s', [student_data.student_id, date])
+    print('Hello')
     # Render the response to the user
     return render(request, 'index.html', {})
 
