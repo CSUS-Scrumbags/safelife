@@ -1,22 +1,59 @@
 from django.db import models
-from datetime import datetime
 
-# Create your models here.
+
+class Student(models.Model):
+    student_id = models.CharField(max_length=5, primary_key=True)
+    student_name = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'students'
+
+
+class Teacher(models.Model):
+    teacher_id = models.CharField(max_length=5, primary_key=True)
+    teacher_name = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'teachers'
+
+
+class Course(models.Model):
+    course_id = models.CharField(max_length=5, primary_key=True)
+    course_name = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'courses'
+
+
+class CourseStudent(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    students = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'course_students'
+
+
+class CourseTeacher(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    teachers = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'course_teachers'
+
+
 class Class(models.Model):
-    classID = models.CharField(max_length=10, primary_key = True)
-    classDate1 = models.DateField(blank=False)
-    classDate2 = models.DateField(blank=False)
-    classDate3 = models.DateField(blank=False)
-    classDate4 = models.DateField(blank=False)
-    classDate5 = models.DateField(blank=False)
-    classDate6 = models.DateField(blank=False)
-    classDate7 = models.DateField(blank=False)
-    classDate8 = models.DateField(blank=False)
-    classDate9 = models.DateField(blank=False)
-    classDate10 = models.DateField(blank=False)
-    classDate11 = models.DateField(blank=False)
-    classDate12 = models.DateField(blank=False)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date = models.DateField()
 
-class Meta:
-        app_label="administrator"
+    class Meta:
+        db_table = 'classes'
 
+
+class Attendance(models.Model):
+    students = models.CharField(max_length=5)
+    classes = models.CharField(max_length=5)
+    status = models.CharField(max_length=50)
+    date = models.DateField()
+
+    class Meta:
+        db_table = 'attendances'
