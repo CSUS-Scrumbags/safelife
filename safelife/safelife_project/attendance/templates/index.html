@@ -57,7 +57,7 @@
       .slider.round:before {
       border-radius: 50%;
       }
-      .radio2 input {
+      .checkbox2 input {
       opacity: 0;
       width: 0;
       height: 0;
@@ -107,7 +107,7 @@
                   <td>
                      {%  for Absent in absent_students %}
                      {% ifequal Student.student_name Absent.student_name %}
-                     <input class = "radio2" type="radio" id="{{ Student.student_name }} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}">
+                     <input class = "checkbox2" type="checkbox" id="{{ Student.student_name }} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}">
                      <label for="{{ Student.student_name }} {{ Absent.date }}">{{Absent.date}}</label><br>
                      {% endifequal %}
                      {%  endfor %}
@@ -135,7 +135,7 @@
          });
       </script>
       <script type="text/javascript">
-         $('.radio2').click(function(){
+         $('.checkbox2').click(function(){
          var students_name, student_absent_date;
          students_name = $(this).attr("data-students_name");
          student_absent_date = $(this).attr("data-student_absent_date");
