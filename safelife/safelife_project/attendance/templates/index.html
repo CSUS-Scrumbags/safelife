@@ -127,7 +127,7 @@
          $.ajax(
          {
              type:"GET",
-             url: "http://127.0.0.1:8000/attendance/updateStudent",
+             url: "updateStudent",
              data:{
                       studentName: students_name,
              },
@@ -142,7 +142,7 @@
          $.ajax(
          {
              type:"GET",
-             url: "http://127.0.0.1:8000/attendance/updateStudentAbsent",
+             url: "updateStudentAbsent",
              data:{
                   studentName: students_name,
                   absentDate: student_absent_date
