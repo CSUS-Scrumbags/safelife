@@ -56,7 +56,7 @@ VALUES('301', '101' , 'Absent', '2019-03-23');
 INSERT INTO attendances(classes, students, status, date)
 VALUES('301', '101' , 'Absent', '2019-03-24');
 INSERT INTO attendances(classes, students, status, date)
-VALUES('301', '101' , 'Present', '2019-03-25');
+VALUES('301', '101' , 'Absent', '2019-03-25');
 INSERT INTO attendances(classes, students, status, date)
 VALUES('301', '101' , 'Absent', '2019-03-26');
 INSERT INTO attendances(classes, students, status, date)
