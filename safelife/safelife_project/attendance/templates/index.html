@@ -1,125 +1,74 @@
-
-
-<!DOCTYPE html>
-<html>
-   <style>
-      .table-nonfluid {
-      width: auto !important;
-      }
-      .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-      }
-      .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      }
-      .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #f22121;
-      -webkit-transition: .4s;
-      transition: .4s;
-      }
-      .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-      }
-      input:checked + .slider {
-      background-color: #22d304;
-      }
-      input:focus + .slider {
-      box-shadow: 0 0 1px #22d304;
-      }
-      input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-      }
-      /* Rounded sliders */
-      .slider.round {
-      border-radius: 34px;
-      }
-      .slider.round:before {
-      border-radius: 50%;
-      }
-      .checkbox2 input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      }
-   </style>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-   <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-   <head>
-      <meta charset="UTF-8">
-      <title>Class Attendance</title>
-      {% load static %}
-   </head>
-   <body>
-      <h2>
-         <center>'Class Name' Attendance</center>
-      </h2>
-      <center>
-         <table class="table table-bordered" style="width: 35%">
-            <thead>
-               <tr>
-                  <th style="width: 250px">Student Name</th>
-                  <th style="width: 50px">Present</th>
-                  <th>Makeup</th>
-               </tr>
-            </thead>
-            <tbody>
-               {%  for Student in all_students %}
-               <tr>
-                  <td>{{ Student.student_name }}</td>
-                  {% ifequal "Absent" Student.status %}
-                  <td>
-                     <label class="switch" id="{{Student.student_name}}" href="#" data-students_name="{{ Student.student_name }}">
-                     <input type="checkbox">
-                     <span class="slider round"></span>
-                     </label>
-                  </td>
-                  {% else %}
-                  <td>
-                     <label class="switch" id="{{Student.student_name}}" href="#" data-students_name="{{ Student.student_name }}">
-                     <input type="checkbox" checked>
-                     <span class="slider round"></span>
-                     </label>
-                  </td>
-                  {% endifequal %}
-                  <td>
-                     {%  for Absent in absent_students %}
-                     {% ifequal Student.student_name Absent.student_name %}
-                     <input class = "checkbox2" type="checkbox" id="{{ Student.student_name }} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}">
-                     <label for="{{ Student.student_name }} {{ Absent.date }}">{{Absent.date}}</label><br>
-                     {% endifequal %}
-                     {%  endfor %}
-                  </td>
-                  </td>
-               </tr>
-               {%  endfor %}
-            </tbody>
-         </table>
-      </center>
-      <br>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+{% extends "administrator/base.html" %}
+{% block metadata %}
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{% endblock metadata %}
+{% block content %}
+<div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card ">
+            <div class="card-header">
+               <!--Title needs to pull course name from db-->
+              <h4 class="card-title"> Attendance</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                    <tr>
+                      <th>
+                        Name
+                      </th>
+                      <th>
+                        Status
+                      </th>
+                      <th>
+                        Makeup
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        {%  for Student in all_students %}
+                        <tr>
+                           <td>{{ Student.student_name }}</td>
+                           {% ifequal "Absent" Student.status %}
+                           <td>
+                              <label class="switch" id="{{Student.student_name}}" href="#" data-students_name="{{ Student.student_name }}">
+                              <input type="checkbox" checked data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="danger" data-offstyle="success">
+                              <span class="slider round"></span>
+                              </label>
+                           </td>
+                           {% else %}
+                           <td>
+                              <label class="switch" id="{{Student.student_name}}" href="#" data-students_name="{{ Student.student_name }}">
+                              <input type="checkbox" checked data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="danger" data-offstyle="success">
+                              <span class="slider round"></span>
+                              </label>
+                           </td>
+                           {% endifequal %}
+                           <td>
+                              {%  for Absent in absent_students %}
+                              {% ifequal Student.student_name Absent.student_name %}
+                              <input class = "checkbox2" type="checkbox" id="{{ Student.student_name }} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}">
+                              <label for="{{ Student.student_name }} {{ Absent.date }}">{{Absent.date}}</label><br>
+                              {% endifequal %}
+                              {%  endfor %}
+                           </td>
+                           </td>
+                        </tr>
+                        {%  endfor %}
+                     </tbody>
+                  </table>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+                        
+  {% endblock content %}
+  {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script type="text/javascript">
          $('.switch').click(function(){
          var students_name;
@@ -150,6 +99,7 @@
           })
          });
       </script>
-   </body>
-</html>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    {% endblock scripts %}
