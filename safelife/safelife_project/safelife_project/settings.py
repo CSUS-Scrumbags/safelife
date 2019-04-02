@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'administrator.apps.AdministratorConfig',
     'teacher.apps.TeacherConfig',
     'attendance.apps.AttendanceConfig',
@@ -70,6 +71,7 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'success'
 WSGI_APPLICATION = 'safelife_project.wsgi.application'
 
 
