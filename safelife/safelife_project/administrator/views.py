@@ -2,6 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return render(request, 'administrator/base.html')
+    return render(request, 'administrator/home.html')
 
 
