@@ -73,12 +73,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'admin:index' %}">
-              <i class="ni ni-single-02 text-info"></i> Account Management
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'admin:index' %}">
-              <i class="ni ni-ruler-pencil text-info"></i> Class Management
+              <i class="ni ni-single-02 text-info"></i> Account & Class Management
             </a>
           </li>
 		  <li class="nav-item">
@@ -125,7 +120,7 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Placeholder</span>
+                  <span class="mb-0 text-sm  font-weight-bold">Hello {{ user.get_short_name }}!</span>
                 </div>
               </div>
             </a>
