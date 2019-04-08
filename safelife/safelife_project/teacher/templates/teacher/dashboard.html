@@ -1,0 +1,96 @@
+{% extends "teacher/base.html" %}
+{% load staticfiles%}
+{% block metadata %}
+{% endblock metadata %}
+{% block content %}
+
+<div class="row mt-5">
+        <div class="col">
+          <div class="card bg-default shadow">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="text-white mb-0">My Classes</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-dark table-flush">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Class</th>
+                    <th scope="col">Students</th>
+                    <th scope="col">Next Class </th>
+                    <th scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for teachercourse in teacher_current_courses %}
+                <tr>
+                    <th scope="row">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ teachercourse.course_name }} </span>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                        <div class="media-body">
+                            <span class="mb-0 text-sm">{% for x,y in teacher_student_count %}
+                                                            {% if x == teachercourse.course_id %}
+                                                                {{ y }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="media-body">
+                            <span class="mb-0 text-sm">{% for x,y in next_class_date %}
+                                                            {% if x == teachercourse.course_id %}
+                                                                {{ y }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        {% for x,y in teacher_course_notes %}
+                        {% if x == teachercourse.course_id %}     
+                            <div id="form_container">                                  
+                                    <div class="input-group">
+                                        <textarea class="form-control custom-control" rows="3" style="resize:none" id="{{ teachercourse.course_id }}">{{ y }} </textarea> 
+                                        <input type="submit" class="edit" data-course_id="{{ teachercourse.course_id }}" value="Submit" />
+                                    </div>
+                            </div> 
+                         {% endif %}
+                         {% endfor %}
+                    </th>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+                        
+{% endblock content %}
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+    $('.edit').click(function(){
+    var course_notes, course_id
+    course_id = $(this).attr("data-course_id");
+    course_notes= $('textarea').val()
+    $.ajax(
+    {
+        type:"GET",
+        url: "updateCourseNotes",
+        data:{
+             courseNotes: course_notes,
+             courseId: course_id
+        },
+    })
+    });
+ </script>
+{% endblock scripts %}
