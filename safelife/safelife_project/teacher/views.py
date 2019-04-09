@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from django.db import connection
 from django.http import HttpResponseRedirect
 import datetime
+from django.http import JsonResponse
 from administrator.models import Course, CourseTeacher, CourseStudent, Student
 from .forms import CourseNotesUpdateForm
 
@@ -52,10 +54,11 @@ def home(request):
     # Render the template to the user
         return HttpResponse(template.render(context, request))
 
+@csrf_exempt
 def update_course_notes(request):
     # Get the student name that was passed from the web page
-    courseNotes = request.GET['courseNotes']
-    courseId = request.GET['courseId']
+    courseNotes = request.POST.get('courseNotes')
+    courseId = request.POST.get('courseId')
     # Create a cursor to execute raw SQL queries.
     with connection.cursor() as cursor:
         cursor.execute('UPDATE courses '
@@ -63,4 +66,4 @@ def update_course_notes(request):
                         'WHERE course_id = %s', [courseNotes, courseId])
 
     # Render the response to the user
-    return render(request, 'dashboard.html', {})
+  
