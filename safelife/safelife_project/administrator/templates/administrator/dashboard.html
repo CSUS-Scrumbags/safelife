@@ -2,13 +2,14 @@
 {% load staticfiles%}
 {% block metadata %}
 {% endblock metadata %}
+{% block header %}
+{% endblock header %}
 {% block content %}
 
-<div class="row mt-5">
-        <div class="col">
+
           <div class="card bg-default shadow">
             <div class="card-header bg-transparent border-0">
-              <h3 class="text-white mb-0">Card tables</h3>
+              <h3 class="text-white mb-0">My Classes</h3>
             </div>
             <div class="table-responsive">
               <table class="table align-items-center table-dark table-flush">
@@ -19,56 +20,103 @@
                     <th scope="col">Next Class </th>
                     <th scope="col">Notes</th>
                     <th scope="col"></th>
-                  </tr>
+                  </tr> 
                 </thead>
                 <tbody>
                 {% for admincourse in admin_current_courses %}
                 <tr>
                     <th scope="row">
                         <div class="media-body">
-                          <span class="mb-0 text-sm">{{ admincourse }}</span>
+                          <span class="mb-0 text-sm">{{ admincourse.course_name }} </span>
                         </div>
                       </div>
                     </th>
                     <th>
+                        <div class="media-body">
+                            <span class="mb-0 text-sm">{% for x,y in admin_student_count %}
+                                                            {% if x == admincourse.course_id %}
+                                                                {{ y }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                            </span>
+                        </div>
                     </th>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <i class="bg-warning"></i> pending
-                      </span>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">60%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                          </div>
+                    <th>
+                        <div class="media-body">
+                            <span class="mb-0 text-sm">{% for x,y in next_class_date %}
+                                                            {% if x == admincourse.course_id %}
+                                                                {{ y }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                            </span>
                         </div>
-                      </div>
-                    </td>
-                    <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </td>
-                </tr>
+                    </th>
+
+                    <th>
+                        {% for x,y in admin_course_notes %}
+                          {% if x == admincourse.course_id %} 
+                            <div class="media-body">
+                              <span class="mb-0 text-sm" id="span{{ admincourse.course_id }}">
+                                {{ y }}
+                              </span>
+                            </div>
+
+                            <div id="form_container">                                  
+                              <div class="input-group">
+                                  <textarea class="form-control custom-control" rows="3" style="resize:none;display:none" id="textarea{{ admincourse.course_id }}">{{ y }} </textarea> 
+                                    <input type="submit" class="edit" data-course_id="{{ admincourse.course_id }}" value="Submit" onclick="" id="input{{ admincourse.course_id }}" style="display:none"/>
+                              </div>
+                            </div> 
+                    </th>
+                    <th>
+                      <base-button type="primary" class="btn btn-primary" button-course_id="{{ admincourse.course_id }}" id="base-button{{ admincourse.course_id }}">Edit</base-button>
+                    </th>
+                      {% endif %}
                     {% endfor %}
+                </tr>
+                {% endfor %}
                 </tbody>
               </table>
             </div>
           </div>
-        </div>
-      </div>
+
                         
 {% endblock content %}
 {% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+    $('.edit').click(function(){
+    var course_notes, course_id
+    course_id = $(this).attr("data-course_id");
+    course_notes= document.getElementById("textarea"+course_id).value;
+    $.ajax(
+    {
+        type:"POST",
+        url: "updateCourseNotes",
+        data:{
+             courseNotes: course_notes,
+             courseId: course_id
+        },
+    })
+    $('#'+"textarea"+course_id).hide();
+    $(this).hide();
+    $('#'+"span"+course_id).show();
+    $('#'+"base-button"+course_id).show();
+    window.location.reload();
+    });
+
+    $('base-button').click(function(){
+    var course_id
+    course_id = $(this).attr("button-course_id");
+    $('#'+"span"+course_id).hide();
+    $(this).hide();
+    $('#'+"textarea"+course_id).show();
+    $('#'+"input"+course_id).show();
+    });
+
+ </script>
 {% endblock scripts %}

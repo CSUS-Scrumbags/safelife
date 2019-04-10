@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 import datetime
 from django.http import JsonResponse
 from administrator.models import Course, CourseTeacher, CourseStudent, Student
-from .forms import CourseNotesUpdateForm
 
 @login_required(login_url='/users')
 def home(request):
