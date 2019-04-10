@@ -8,7 +8,7 @@
   <meta name="description" content="Instructor functionality">
   <title>Safe Life Project</title>
   <!-- Favicon -->
-  <link href="{% static 'assets/img/brand/safelife.jpg' %}" rel="icon" type="image/png">
+  <link href="{% static 'assets/img/brand/safelife.png' %}" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -29,7 +29,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="./">
-        <img src="{% static 'assets/img/brand/safelife.jpg' %}" class="navbar-brand-img" alt="..." >
+        <img src="{% static 'assets/img/brand/safelife.png' %}" class="navbar-brand-img" alt="..." >
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -53,7 +53,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="./">
-                <img src="{% static 'assets/img/brand/safelife.jpg' %}">
+                <img src="{% static 'assets/img/brand/safelife.png' %}">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -73,7 +73,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/attendance/">
-              <i class="ni ni-single-02 text-info"></i> Attendance
+              <i class="ni ni-single-02 text-info"></i> Class Attendance
             </a>
           </li>
       <li class="nav-item">
@@ -81,11 +81,7 @@
               <i class="ni ni-single-copy-04 text-info"></i> Reporting
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
-              <i class="ni ni-key-25 text-info"></i> Login
-            </a>
-          </li>
+
         </ul>
         <!-- Divider -->
         <hr class="my-3">
@@ -141,11 +137,12 @@
     <!-- Header -->
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
+        <div class="header-body">
+          </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--7">
-        <div class="row">
           <div class="col">
             <div class="card shadow border-0">
              {% block content %}{% endblock content %}
