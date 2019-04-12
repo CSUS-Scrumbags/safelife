@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Student(models.Model):
@@ -31,6 +32,10 @@ class Course(models.Model):
     course_id = models.CharField(max_length=5, primary_key=True)
     course_name = models.CharField(max_length=50)
     notes = models.CharField(max_length=280)
+    is_complete = models.SmallIntegerField(
+        default=0,
+        validators=[MaxValueValidator(1), MinValueValidator(0)]
+     )
 
     def __str__(self):
         return self.course_name

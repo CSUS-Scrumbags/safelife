@@ -8,7 +8,7 @@
   <meta name="description" content="Instructor functionality">
   <title>Safe Life Project</title>
   <!-- Favicon -->
-  <link href="{% static 'assets/img/brand/safelife.png' %}" rel="icon" type="image/png">
+  <link href="{% static 'assets/img/brand/safelife.jpg' %}" rel="icon" type="image/jpg">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -29,7 +29,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="./">
-        <img src="{% static 'assets/img/brand/safelife.png' %}" class="navbar-brand-img" alt="..." >
+        <img src="{% static 'assets/img/brand/safelife.jpg' %}" class="navbar-brand-img" alt="..." >
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -53,7 +53,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="./">
-                <img src="{% static 'assets/img/brand/safelife.png' %}">
+                <img src="{% static 'assets/img/brand/safelife.jpg' %}">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -73,17 +73,17 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'admin:index' %}">
-              <i class="ni ni-single-02 text-info"></i> Account & Class Management
+              <i class="ni ni-single-02 text-purple"></i> Account & Class Management
             </a>
           </li>
 		  <li class="nav-item">
             <a class="nav-link" href="">
-              <i class="ni ni-single-copy-04 text-info"></i> Reporting
+              <i class="ni ni-single-copy-04 text-red"></i> Reporting
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">
-              <i class="ni ni-key-25 text-info"></i> Logout
+            <a class="nav-link" href="{% url 'logout' %}">
+              <i class="ni ni-key-25 text-yellow"></i> Logout
             </a>
           </li>
         </ul>
@@ -120,7 +120,7 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Hello {{ user.get_short_name }}!</span>
+                  <span class="mb-0 text-sm  font-weight-bold">{{ user.get_full_name }}</span>
                 </div>
               </div>
             </a>
@@ -139,18 +139,19 @@
       </div>
     </nav>
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-      <div class="container-fluid">
-      </div>
-    </div>
-    <!-- Page content -->
-    <div class="container-fluid mt--7">
-        <div class="row">
-          <div class="col">
-            <div class="card shadow border-0">
-             {% block content %}{% endblock content %}
+    <div class="header bg-gradient-indigo pb-8 pt-5 pt-md-8">
+      <div class="container-fluid d-flex align-items-center"">
+          <div class="row">
+              <div class="col-lg-7 col-md-10">
+                <h1 class="display-2 text-white">Hello {{ user.get_short_name }}</h1>
+                <p class="text-white mt-0 mb-5">This is your dashboard. You can view classes, access reporting, and manage classes and accounts.</p>
+              </div>
             </div>
           </div>
+        </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+             {% block content %}{% endblock content %}
         </div>
       <!-- Footer -->
       <footer class="footer">

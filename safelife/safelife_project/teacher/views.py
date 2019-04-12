@@ -14,7 +14,7 @@ def home(request):
         current_user = request.user.id
         teacher_current_courses = Course.objects.select_related().raw('SELECT * '
                                                         'FROM course_teachers as CT, courses as C '
-                                                        'WHERE CT.teachers_id = %s AND C.course_id = CT.course_id ', [current_user])
+                                                        'WHERE CT.teachers_id = %s AND C.course_id = CT.course_id AND C.is_complete = 0 ', [current_user])
 
         currentdate = datetime.datetime.today().strftime('%Y-%m-%d')
 
