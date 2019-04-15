@@ -1,0 +1,55 @@
+{% extends "administrator/base.html" %}
+{% block metadata %}
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{% endblock metadata %}
+{% block content %}
+<div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card ">
+            <div class="card-header">
+               <!--Title needs to pull course name from db-->
+              <h4 class="card-title">You do not have access to this course.</h4>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
+                        
+  {% endblock content %}
+  {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script type="text/javascript">
+         $('.switch').click(function(){
+         var students_name;
+         students_name = $(this).attr("data-students_name");
+         $.ajax(
+         {
+             type:"GET",
+             url: "updateStudent",
+             data:{
+                      studentName: students_name,
+             },
+          })
+         });
+      </script>
+      <script type="text/javascript">
+         $('.checkbox2').click(function(){
+         var students_name, student_absent_date;
+         students_name = $(this).attr("data-students_name");
+         student_absent_date = $(this).attr("data-student_absent_date");
+         $.ajax(
+         {
+             type:"GET",
+             url: "updateStudentAbsent",
+             data:{
+                  studentName: students_name,
+                  absentDate: student_absent_date
+             },
+          })
+         });
+      </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    {% endblock scripts %}
