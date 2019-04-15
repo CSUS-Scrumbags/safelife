@@ -118,12 +118,12 @@ def update_student_absent(request, course_id, date):
             # Change the students attendance status from Absent to 'Makeup: <date>'
             cursor.execute('UPDATE attendances '
                            'SET status = "Makeup: " %s '
-                           'WHERE students = %s AND date = %s ', [student_data.student_id, currentdate])
+                           'WHERE students = %s AND date = %s ', [currentdate, student_data.student_id, date])
         else:
             # Change the students attendance status from 'Makeup: <date>' to Absent
             cursor.execute('UPDATE attendances '
                            'SET status = "Absent" '
-                           'WHERE students = %s AND date = %s ', [student_data.student_id, currentdate])
+                           'WHERE students = %s AND date = %s ', [student_data.student_id, date])
     # Render the response to the user
     return render(request, 'index.html', {})
 
