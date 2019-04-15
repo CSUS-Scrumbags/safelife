@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'reporting.apps.ReportingConfig',
     'users.apps.UsersConfig',
     'administrator.apps.AdministratorConfig',
     'teacher.apps.TeacherConfig',
