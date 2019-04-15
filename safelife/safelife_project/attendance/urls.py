@@ -1,8 +1,10 @@
 from django.conf.urls import url
+from django.urls import path
+
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^updateStudent/', views.update_student, name='update_student'),
-    url(r'^updateStudentAbsent/', views.update_student_absent, name='update_student_absent'),
+    path('<int:course_id>/<str:date>/', views.index, name='index'),
+    url(r'^(?P<course_id>\d+)/(?P<date>[\w|\W]+)/updateStudent/', views.update_student, name='update_student'),
+    url(r'^(?P<course_id>\d+)/(?P<date>[\w|\W]+)/updateStudentAbsent/', views.update_student_absent, name='update_student_absent'),
 ]
