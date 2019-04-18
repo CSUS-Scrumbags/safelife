@@ -8,8 +8,19 @@ from django.http import HttpResponseRedirect
 import datetime
 from django.http import JsonResponse
 from administrator.models import Course, CourseTeacher, CourseStudent, Student
+from django.core.exceptions import PermissionDenied
 
-@login_required(login_url='/users')
+
+def teacher_only(function):
+  #"""Limit view to teacher only."""
+   def _inner(request, *args, **kwargs):
+       if not request.user.is_staff == False | request.user.is_superuser:
+           raise PermissionDenied           
+       return function(request, *args, **kwargs)
+   return _inner
+
+@login_required(login_url = '/users')
+@teacher_only
 def home(request):
         current_user = request.user.id
         teacher_current_courses = Course.objects.select_related().raw('SELECT * '
