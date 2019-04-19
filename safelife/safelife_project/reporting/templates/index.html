@@ -12,11 +12,50 @@
               <h4 class="card-title"> Reporting</h4>
             </div>
 
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                 <thead class="thead-light">
+                    <tr>
+                       <th scope="col">Class</th>
+                       <th scope="col">Students</th>
+                       </thead>
+                      </tr>
+
+            <tbody>
+              {% for teachercourse in teacher_current_courses %} 
+              <tr>
+                <th scope="row">
+                  <div class="media-body">
+                     {% for x,y in next_class_date %}
+                     {% if x == teachercourse.course_id %}
+                     <a href="{% url 'report' %}" class="mb-0 text-sm">{{ teachercourse.course_name }} </a>
+                     {% endif %}
+                     {% endfor %}
+                  </div>
+               </th>
+
+               <th>
+                <div class="media-body">
+                   <span class="mb-0 text-sm">{% for x,y in teacher_student_count %}
+                   {% if x == teachercourse.course_id %}
+                   {{ y }}
+                   {% endif %}
+                   {% endfor %}
+                   </span>
+                </div>
+             </th>
+               
+              </tr>
+            </tbody>
+            </table>
+
+            {% endfor %}
+
 
             <div>
                 
                   <div>
-                      <div class="input-group mb-3">
+                      <!--<div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Class</label>
                           </div>
@@ -24,7 +63,7 @@
                               <option selected>Choose Class</option>
                           {%  for Course in all_courses %}
                           
-                              <option href='Course.course_name' id = '{{Course.course_id}}'>{{Course.course_name}}</option>
+                              <option class = "dropdown-item" href='{{Course.course_name}}' id = '{{Course.course_id}}'>{{Course.course_id}}</option>
                               {%  endfor %}
                           </select>
                         </div>
@@ -38,7 +77,7 @@
                             <option value="1">All</option>
                         {% for Student in all_students %}
                         
-                            <option href='Student.student_name'id = '{{Student.student_name}}'>{{Student.student_name}}</option>
+                            <option href='Student.student_name' class_choice = '{{Student.student_name}}'>{{Student.student_name}}</option>
                             {%  endfor %}
                         </select>
                           
@@ -62,7 +101,7 @@
                  <tr>
                   <div>
                       <base-button id="btn" class="btn btn-primary" type = "btn-group" aria-hashpopup="true" aria-expanded="false">Generate Report</base-button>
-                     </div></th>
+                     </div></th> -->
                      
             </tr>
                 
@@ -110,6 +149,20 @@
 
               });
  </script>
+
+<script type="text/javascript">
+  $('.dropdown-item').click(function(){
+  var classChoice;
+  classChoice = $(this).attr("class_choice");
+  var url = window.location.href;
+  var url_arr = url.split('/');
+  url_arr.pop();
+  url_arr.pop();
+  url = url_arr.join('/');
+  url = url + '/' + date;
+  window.location.replace(url);
+  });
+</script>
 
 
 
