@@ -92,7 +92,7 @@ def home(request):
                 'all_course_teachers': all_course_teachers,
                 'admin_course_notes': admin_course_notes
         }
-    
+        
     # Render the template to the user
         return HttpResponse(template.render(context, request))
 

@@ -6,6 +6,7 @@
 {% endblock header %}
 {% block content %}
 
+
                      
 <!-- Table -->
 <div class="row">
@@ -105,11 +106,15 @@
                <tbody>
                   {% for allcourses in all_courses %}
                   <tr>
-                     <th scope="row">
-                        <div class="media-body">
-                           <span class="mb-0 text-sm">{{ allcourses.course_name }} </span>
-                        </div>
-                     </th>
+                    <th scope="row">
+                      <div class="media-body">
+                         {% for x,y in all_next_class_date %}
+                         {% if x == allcourses.course_id %}
+                         <a href="attendance/{{ x }}/{{ y }}" class="mb-0 text-sm">{{ allcourses.course_name  }} </a>
+                         {% endif %}
+                         {% endfor %}
+                      </div>
+                   </th>
                      <th>
                         <div class="media-body">
                            <span class="mb-0 text-sm">{% for x,y in all_student_count %}
