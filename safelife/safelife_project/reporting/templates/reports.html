@@ -10,6 +10,7 @@
             <div class="card-header">
                <!--Title needs to pull course name from db-->
               <h4 class="card-title"> Student Reports</h4>
+              <h4 class="card-title">Course: {{ course_name }}</h4>
             </div>
 
             <div class="table-responsive">
@@ -20,6 +21,7 @@
                        {%  for Date in class_dates %}
 
                        <th scope="col">{{Date.date}}</th>
+                       
                        {% endfor %}
                        </thead>
                       </tr>
@@ -29,18 +31,28 @@
             <tbody>
               {% for students in all_students %} 
               <tr>
-                <th scope="row">
-                  <div class="media-body">
+                
+                  <th scope="row">
+                    <div class="media-body">
 
-                     <a href="no bueno" class="mb-0 text-sm">{{students.student_name}} </a>
-                     {% endfor %}
-                     
-                  </div>
-               </th>
-
+                      <a href="no bueno" class="mb-0 text-sm">{{students.student_name}} </a>
+                      
+                      
+                    </div>
+                </th>
+               
+               {%  for Date in class_dates %}
+               <td>
+                  {{students.status}}
+               </td>
+                       
+               {% endfor %}
+               
+               {% endfor %}
                
               </tr>
             </tbody>
+            
 
             
             </table>

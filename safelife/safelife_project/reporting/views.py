@@ -93,7 +93,14 @@ def report(request):
                                                             'FROM students as S, classes as CL, attendances as A '
                                                             'WHERE CL.course_id = 301 AND S.student_id = A.students '
                                                             'AND CL.course_id = A.classes AND CL.date = A.date '
-                                                            )                                                       
+                                                            'GROUP BY student_name'
+                                                            )
+    status = Student.objects.select_related().raw('SELECT status '
+                                                            'FROM students as S, classes as CL, attendances as A '
+                                                            'WHERE CL.course_id = 301 AND S.student_id = A.students '
+                                                            'AND CL.course_id = A.classes AND CL.date = A.date '
+                                                            'GROUP BY status'
+                                                            )                                                                                                                 
 
     all_dates = Course.objects.select_related().raw('SELECT date '
                                                       'FROM classes, courses as C '
@@ -102,7 +109,8 @@ def report(request):
     context = {
         'all_dates': all_dates,
         'class_dates': class_dates,
-        'all_students': all_students
+        'all_students': all_students,
+        'status': status
         
 
 
