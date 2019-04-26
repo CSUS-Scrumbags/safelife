@@ -24,7 +24,6 @@ class CourseAdmin(admin.ModelAdmin):
     exclude = ('notes',)
     
 
-
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.site_header = "Safe Life Project ";

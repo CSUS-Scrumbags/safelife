@@ -9,6 +9,7 @@ import datetime
 from django.http import JsonResponse
 from django.db.models import Count
 from administrator.models import Course, CourseTeacher, CourseStudent, Student, Class
+from documents.models import Document
 from django.core.exceptions import PermissionDenied
 
  #Limit view to admin only."""
@@ -33,6 +34,15 @@ def home(request):
                                                         'WHERE C.is_complete = 0')
 
         currentdate = datetime.datetime.today().strftime('%Y-%m-%d')
+
+        with connection.cursor() as cursor:
+                docs =cursor.execute('SELECT D.id, D.doc_type_id '
+                                                        'FROM documents AS D '
+                                                        'GROUP BY D.doc_type_id '
+                                                        'ORDER BY D.doc_type_id ')
+                docs = cursor.fetchall()
+        firstdoc = docs[:1]
+        print(firstdoc)
 
         with connection.cursor() as cursor:
                 cursor.execute('SELECT CL.course_id, CL.date '
@@ -90,9 +100,10 @@ def home(request):
                 'next_class_date': next_class_date,
                 'all_next_class_date': all_next_class_date,
                 'all_course_teachers': all_course_teachers,
-                'admin_course_notes': admin_course_notes
+                'admin_course_notes': admin_course_notes,
+                'firstdoc': firstdoc
         }
-        
+
     # Render the template to the user
         return HttpResponse(template.render(context, request))
 
@@ -108,3 +119,9 @@ def update_course_notes(request):
                         'WHERE course_id = %s', [courseNotes, courseId])
 
     # Render the response to the user
+
+@login_required(login_url = '/users')
+@admin_only
+def docs(request):
+        template = loader.get_template('administrator/docs.html')
+        return HttpResponse(template.render())

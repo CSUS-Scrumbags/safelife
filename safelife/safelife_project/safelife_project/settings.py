@@ -25,7 +25,7 @@ SECRET_KEY = '(m71(q1*8as#3xjscj=sp_3*^2##+=4hv*s+@*57eoo6zk^qv2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',]
 
 
 # Application definition
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'administrator.apps.AdministratorConfig',
     'teacher.apps.TeacherConfig',
     'attendance.apps.AttendanceConfig',
+    'documents.apps.DocumentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
