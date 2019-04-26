@@ -95,12 +95,13 @@ def report(request):
                                                             'WHERE CL.course_id = 301 AND S.student_id = A.students '
                                                             'AND CL.course_id = A.classes AND CL.date = A.date '
                                                             'GROUP BY student_name'
-                                                            )
-    status = Student.objects.select_related().raw('SELECT status '
+                                                             )
+    status = Student.objects.select_related().raw('SELECT   A.*'
                                                             'FROM students as S, classes as CL, attendances as A '
-                                                            'WHERE CL.course_id = 301 AND S.student_id = A.students '
-                                                            'AND CL.course_id = A.classes AND CL.date = A.date '
-                                                            'GROUP BY status'
+                                                            'WHERE CL.course_id = 301 AND CL.course_id = A.classes '
+                                                            'AND CL.date = A.date '
+                                                            'GROUP BY A.id'
+                                                            'ORDER BY A.students'
                                                             )                                                                                                                 
 
     all_dates = Course.objects.select_related().raw('SELECT date '
@@ -118,6 +119,6 @@ def report(request):
     }
     
     # Render the template to the user
-    return HttpResponse(template.render(context, request))
+    return render(request, "reports.html", context)
 
 

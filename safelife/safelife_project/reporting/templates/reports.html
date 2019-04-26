@@ -50,20 +50,30 @@
                   <th scope="row">
                     <div class="media-body">
 
-                      <a href="no bueno" class="mb-0 text-sm">{{students.student_name}} </a>
+                      <a href="/student/" class="mb-0 text-sm">{{students.student_name}} </a>
                       
                       
                     </div>
                 </th>
-               
-               {%  for Date in class_dates %}
+                
+                
                <td>
-                  {{students.status}}
-               </td>
-                       
-               {% endfor %}
+                 
+               {%  for date in class_dates %}
                
-               {% endfor %}
+               
+                      
+                  {% ifequal date.dates attendance.date %}
+                 
+                  {{students.status}}
+                {% endifequal %}
+              
+               </td>
+               {% endfor %} 
+                
+              
+              {% endfor %}
+            
                
               </tr>
             </tbody>

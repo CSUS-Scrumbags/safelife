@@ -43,7 +43,7 @@
                   <div class="media-body">
                      {% for x,y in next_class_date %}
                      {% if x == teachercourse.course_id %}
-                     <a href="/reporting/report/" class="mb-0 text-sm">{{ teachercourse.course_name }} </a>
+                     <a href="{% url 'reports' %}" class="mb-0 text-sm">{{ teachercourse.course_name }} </a>
                      {% endif %}
                      {% endfor %}
                   </div>
