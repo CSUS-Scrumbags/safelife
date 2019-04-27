@@ -22,7 +22,7 @@
 </head>
 
 <body style = "background-image:url({% static 'assets/img/brand/login.png' %});background-repeat: no-repeat; background-size: cover;">
-  <header class="header-global" style = "background-color: black;">
+  <header class="header-global bg-gradient-indigo">
     <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
       <div class="container">
         <a class="navbar-brand mr-lg-5" href="{% url 'login' %}" style = "color: #FFFFFF;"> Safelife Project </a>
@@ -59,7 +59,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-5">
             <div class="card bg-secondary shadow border-0">
-              <div class="card-header p-3 mb-2 bg-dark">
+              <div class="card-header p-3 mb-2 bg-dark pt-5">
                 
               <div class="card-body px-lg-5 py-lg-5" method = "POST">
                 <div class="text-center text-muted mb-4">
@@ -94,16 +94,17 @@
                   </div>
                 </form>
               </div>
-            </div>
-            <div class="row mt-2">
+            <div class="row mt-2 bg-dark">
               <div class="col-6">
-                <a href="{% url 'password_reset' %}" class="text-dark">
+                <a href="{% url 'password_reset' %}">
                   <small>Forgot password?</small>
                 </a>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
     </section>
   </main>
