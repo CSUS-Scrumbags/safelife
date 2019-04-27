@@ -21,7 +21,7 @@
   <link type="text/css" href="{% static '/assets/css/docs.min.css' %}" rel="stylesheet">
 </head>
 
-<body style = "background-image:url({% static '/assets/img/brand/purple.jpg' %});background-repeat: no-repeat; background-size: cover;">
+<body style = "background-image:url({% static 'assets/img/brand/login.png' %});background-repeat: no-repeat; background-size: cover;">
   <header class="header-global" style = "background-color: black;">
     <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
       <div class="container">
@@ -55,11 +55,11 @@
         <span></span>
         <span></span>
       </div>
-      <div class="container pt-lg-md" method = "POST">
+      <div class="container pt-lg-md" method = "POST" style="margin-top: 100px">
         <div class="row justify-content-center">
           <div class="col-lg-5">
             <div class="card bg-secondary shadow border-0">
-              <div class="card-header bg-transparent pb-5">
+              <div class="card-header p-3 mb-2 bg-dark">
                 
               <div class="card-body px-lg-5 py-lg-5" method = "POST">
                 <div class="text-center text-muted mb-4">
@@ -95,9 +95,9 @@
                 </form>
               </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-2">
               <div class="col-6">
-                <a href="{% url 'password_reset' %}" class="text-light">
+                <a href="{% url 'password_reset' %}" class="text-dark">
                   <small>Forgot password?</small>
                 </a>
               </div>
