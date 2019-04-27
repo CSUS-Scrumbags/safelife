@@ -43,7 +43,8 @@ def index(request):
                                                             'FROM students as S, classes as CL, attendances as A '
                                                             'WHERE CL.course_id = 306 AND S.student_id = A.students '
                                                             'AND CL.course_id = A.classes AND CL.date = A.date '
-                                                            )                                               
+                                                            )
+                                                                                                           
 
     with connection.cursor() as cursor:
         cursor.execute('SELECT CS.course_id, S.student_name '

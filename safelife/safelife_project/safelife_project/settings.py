@@ -25,7 +25,7 @@ SECRET_KEY = '(m71(q1*8as#3xjscj=sp_3*^2##+=4hv*s+@*57eoo6zk^qv2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',]
 
 
 # Application definition
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'administrator.apps.AdministratorConfig',
     'teacher.apps.TeacherConfig',
     'attendance.apps.AttendanceConfig',
+    'documents.apps.DocumentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,6 +75,17 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = 'success'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_USE_TLS = True 
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587 
+EMAIL_HOST_USER = 'scrumbags2018@gmail.com' 
+EMAIL_HOST_PASSWORD = 'goliveready' 
+DEFAULT_FROM_EMAIL = 'scrumbags2018@gmail.com'
+
+
+
 WSGI_APPLICATION = 'safelife_project.wsgi.application'
 
 

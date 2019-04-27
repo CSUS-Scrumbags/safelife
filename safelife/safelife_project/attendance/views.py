@@ -37,6 +37,7 @@ def index(request, course_id, date):
                                                                [course_id, currentdate])
         class_dates = Class.objects.filter(course=course_id)
         currentdate = datetime.datetime.strptime(currentdate, '%Y-%m-%d').strftime('%B %d, %Y')
+        
         # Create a template using index.html, and pass into it the list of student names and recorded absences
         if super is True:
             template = loader.get_template('AdminIndex.html')

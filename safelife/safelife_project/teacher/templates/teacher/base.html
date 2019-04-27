@@ -28,8 +28,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./">
-        <img src="{% static 'assets/img/brand/safelife.jpg' %}" class="navbar-brand-img" alt="..." >
+      <a class="navbar-brand mr-0 mr-md-2 text-teal" aria-label="Bootstrap">
+        SAFE LIFE PROJECT
+        <sup>TM</sup>
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -90,13 +91,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link" href="/forms/">
+            <a class="nav-link" href="documents/">
               <i class="ni ni-spaceship"></i> Forms
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/help/">
-              <i class="ni ni-palette"></i> Help Docs
             </a>
           </li>
         </ul>
@@ -108,15 +104,14 @@
     <!-- Top navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-        <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./">Dashboard</a>
+        {% block topbar %}{% endblock topbar %}
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">{{ user.get_full_name }}!</span>
+                  <span class="mb-0 text-sm  font-weight-bold">{{ user.get_full_name }}</span>
                 </div>
               </div>
             </a>
@@ -135,16 +130,8 @@
       </div>
     </nav>
     <!-- Header -->
-    <div class="header bg-gradient-teal pb-8 pt-5 pt-md-8">
-        <div class="container-fluid d-flex align-items-center">
-            <div class="row">
-                <div class="col-lg-7 col-md-10">
-                  <h1 class="display-2 text-white">Hello {{ user.get_short_name }}</h1>
-                  <p class="text-white mt-0 mb-5">This is your dashboard. You can view your classes, access reporting, and manage attendance.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    {% block header %}
+    {% endblock header %}
     <!-- Page content -->
     <div class="container-fluid mt--7">
           <div class="col">

@@ -1,106 +1,121 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>login</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="main.js"> </script>
-<style type="text/css">
-	 body, html {
-        height: 100%;
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    * {
-    box-sizing: border-box;
-    }
-
-    .login-form {
-		width: 340px;
-    	margin: 50px auto;
-	}
-    .login-form form {
-    	margin-bottom: 15px;
-        background: #f7f7f7;
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-        padding: 30px;
-    }
-    .login-form h2 {
-        margin: 0 0 15px;
-    }
-    .form-control, .btn {
-        min-height: 38px;
-        border-radius: 2px;
-    }
-    .btn {        
-        font-size: 15px;
-        font-weight: bold;
-    }
-
-    .bg-image{
-        background-image:url("{% static 'assets/img/brand/login.png' %}");
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-
-        height: 100%;
-
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-    .bg-text {
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    /*color: white; */
-    font-weight: bold;
-    border: 3px solid #f1f1f1;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-     z-index: 2;
-     width: 25%;
-    padding: 20px;
-     text-align: center;
-    }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Design System for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>Login Page</title>
+  <!-- Favicon -->
+  <link href="{% static '/assets/img/brand/safelife.png' %}" rel="icon" type="image/png">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <!-- Icons -->
+  <link href="{% static '/assets/vendor/nucleo/css/nucleo.css' %}" rel="stylesheet">
+  <link href="{% static '/assets/vendor/@fontawesome/fontawseome-free/css/fontawesome.min.css' %}" rel="stylesheet">
+  <!-- Argon CSS -->
+  <link type="text/css" href="{% static '/assets/css/argon.css' %}" rel="stylesheet">
+  <!-- Docs CSS -->
+  <link type="text/css" href="{% static '/assets/css/docs.min.css' %}" rel="stylesheet">
 </head>
-<body>
-<div class = "bg-image">
 
-</div>
-<div class = "bg-text">
-<div class="login-form" method = "POST">
-    <form method = "post" action = "{%  url 'login' %}"> 
-        {% csrf_token %}
-        <h2 class="text-center">Log in</h2>       
-        <div class="form-group">
-            <p id="username" required="required"> Username: </p>
-            {{ form.username }}
+<body style = "background-image:url({% static 'assets/img/brand/login.png' %});background-repeat: no-repeat; background-size: cover;">
+  <header class="header-global bg-gradient-indigo">
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
+      <div class="container">
+        <a class="navbar-brand mr-lg-5" href="{% url 'login' %}" style = "color: #FFFFFF;"> Safelife Project </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar_global">
+          <div class="navbar-collapse-header">
+            <div class="row">
+              <div class="col-6 collapse-brand">
+                <a href="{% url 'login' %}">
+                  <img src="#">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="section section-shaped section-lg">
+      <div class="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="container pt-lg-md" method = "POST" style="margin-top: 100px">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="card bg-secondary shadow border-0">
+              <div class="card-header p-3 mb-2 bg-dark pt-5">
+                
+              <div class="card-body px-lg-5 py-lg-5" method = "POST">
+                <div class="text-center text-muted mb-4">
+                  <small>Sign in with credentials</small>
+                </div>
+                <form method = "post" action = "{%  url 'login' %}">
+                {% csrf_token %}
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                      </div>
+                      {{ form.username }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      {{ form.password }}
+                    </div>
+                  </div>
+                  <div class="custom-control custom-control-alternative custom-checkbox">
+                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                    <label class="custom-control-label" for=" customCheckLogin">
+                      <span>Remember me</span>
+                    </label>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                  </div>
+                </form>
+              </div>
+            <div class="row mt-2 bg-dark">
+              <div class="col-6">
+                <a href="{% url 'password_reset' %}">
+                  <small>Forgot password?</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </section>
+  </main>
 
-        </div>
-        <div class="form-group">
-            <p id="password" required="required"> Password: </p>
-            {{ form.password }}
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block" value = "Submit">Log in</button>
-        </div>
-        <div class="clearfix">
-            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-            <a href="{% url 'password_reset' %}" class="pull-right">Forgot Password?</a>
-            
-        </div>        
-    </form>
-</div>
-</div>
+  <!-- Core -->
+  <script src="{% static '/assets/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/popper/popper.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/bootstrap/bootstrap.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/headroom/headroom.min.js' %}"></script>
+  <!-- Argon JS -->
+  <script src="{% static '/assets/js/argon.js?v=1.0.1' %}"></script>
 </body>
-</html> 
+
+</html>
