@@ -28,11 +28,13 @@
                   <div class="media-body">
                      {% for x,y in next_class_date %}
                      {% if x == teachercourse.course_id %}
-                     <a href="{% url 'reports' %}" class="mb-0 text-sm">{{ teachercourse.course_name }} </a>
+                     <a href="{{ x }}" class="mb-0 text-sm">{{ teachercourse.course_name }} </a>
                      {% endif %}
                      {% endfor %}
                   </div>
                </th>
+              
+
 
                <th>
                 <div class="media-body">
@@ -46,15 +48,13 @@
              </th>
                
               </tr>
+              {% endfor %}
+
             </tbody>
             </table>
 
-            {% endfor %}
+            
 
-
-            <div>
-                
-                  <div>
                       <!--<div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Class</label>
@@ -104,10 +104,7 @@
                      </div></th> -->
                      
             </tr>
-                
-                </div>
 
-               </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table tablesorter " id="">

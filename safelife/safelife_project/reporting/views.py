@@ -7,8 +7,18 @@ from administrator.models import CourseStudent
 from django.db import connection
 import datetime
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+
+def staffCheck(function):
+  #"""Limit view to teacher only."""
+   def _inner(request, *args, **kwargs):
+       if not request.user.is_staff == False | request.user.is_superuser:
+           raise PermissionDenied           
+       return function(request, *args, **kwargs)
+   return _inner
 
 @login_required(login_url='/users')
+@staffCheck
 def index(request):
 
     current_user = request.user.id
@@ -82,30 +92,73 @@ def index(request):
 
 
 
-def report(request):
+def report(request, course_id):
 
-    class_dates = Class.objects.filter(course=301)
+    class_dates = Class.objects.filter(course=course_id)
 
 
     #Get all the students in the class
     
     all_students = Student.objects.select_related().raw('SELECT * '
                                                             'FROM students as S, classes as CL, attendances as A '
-                                                            'WHERE CL.course_id = 301 AND S.student_id = A.students '
+                                                            'WHERE CL.course_id = %s AND S.student_id = A.students '
                                                             'AND CL.course_id = A.classes AND CL.date = A.date '
-                                                            'GROUP BY student_name'
+                                                            'GROUP BY student_name', [course_id]
                                                              )
-    status = Student.objects.select_related().raw('SELECT   A.*'
+    status = Student.objects.select_related().raw('SELECT    * '
                                                             'FROM students as S, classes as CL, attendances as A '
-                                                            'WHERE CL.course_id = 301 AND CL.course_id = A.classes '
+                                                            'WHERE CL.course_id = %s AND CL.course_id = A.classes '
                                                             'AND CL.date = A.date '
-                                                            'GROUP BY A.id'
-                                                            'ORDER BY A.students'
+                                                            'GROUP BY A.id '
+                                                            'ORDER BY A.date' , [course_id]
                                                             )                                                                                                                 
 
     all_dates = Course.objects.select_related().raw('SELECT date '
                                                       'FROM classes, courses as C '
-                                                      'WHERE C.course_id = 306 ')
+                                                      'WHERE C.course_id = %s ', [course_id])
+
+    
+    template = loader.get_template('reports.html')
+    context = {
+        'all_dates': all_dates,
+        'class_dates': class_dates,
+        'all_students': all_students,
+        'status': status
+        
+
+
+    }
+    
+    # Render the template to the user
+    return render(request, "reports.html", context)
+
+
+def student(request, student_id):
+
+    class_dates = Class.objects.filter(course=course_id)
+
+
+    #Get all the students in the class
+    
+    all_students = Student.objects.select_related().raw('SELECT * '
+                                                            'FROM students as S, classes as CL, attendances as A '
+                                                            'WHERE CL.course_id = %s AND S.student_id = A.students '
+                                                            'AND CL.course_id = A.classes AND CL.date = A.date '
+                                                            'GROUP BY student_name', [course_id]
+                                                             )
+    status = Student.objects.select_related().raw('SELECT    * '
+                                                            'FROM students as S, classes as CL, attendances as A '
+                                                            'WHERE CL.course_id = %s AND CL.course_id = A.classes '
+                                                            'AND CL.date = A.date '
+                                                            'GROUP BY A.id '
+                                                            'ORDER BY A.date' , [course_id]
+                                                            )                                                                                                                 
+
+    all_dates = Course.objects.select_related().raw('SELECT date '
+                                                      'FROM classes, courses as C '
+                                                      'WHERE C.course_id = %s ', [course_id])
+
+    
     template = loader.get_template('reports.html')
     context = {
         'all_dates': all_dates,
