@@ -76,8 +76,8 @@
                            <td>
                               {%  for Absent in absent_students %}
                               {% ifequal Student.student_name Absent.student_name %}
-                              <input class = "checkbox2" type="checkbox" id="{{ Student.student_name }} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}">
-                              <label for="{{ Student.student_name }} {{ Absent.date }}">{{Absent.date}}</label><br>
+                              <label>{{Absent.date}}</label>
+                              <input type="date" id="{{Student.student_name}} {{ Absent.date }}" href="#" data-students_name="{{ Student.student_name }}" data-student_absent_date="{{ Absent.date }}" onchange="handler(this);"></br>
                               {% endifequal %}
                               {%  endfor %}
                            </td>
@@ -112,10 +112,12 @@
    });
 </script>
 <script type="text/javascript">
-   $('.checkbox2').click(function(){
-   var students_name, student_absent_date;
+   $('.date').click(function(){
+   var students_name, student_absent_date, date;
    students_name = $(this).attr("data-students_name");
    student_absent_date = $(this).attr("data-student_absent_date");
+   date = $(this).valueOf();
+   alert(date);
    $.ajax(
    {
        type:"GET",
@@ -140,8 +142,27 @@
    window.location.replace(url);
    });
 </script>
+<script>
+function handler(e){
+  var students_name, student_absent_date, date;
+   students_name = e.getAttribute("data-students_name");
+   student_absent_date = e.getAttribute("data-student_absent_date");
+   date = e.value;
+   $.ajax(
+   {
+       type:"GET",
+       url: "updateStudentAbsent",
+       data:{
+            studentName: students_name,
+            absentDate: student_absent_date,
+            makeupDate: date
+       },
+    });
+}
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 {% endblock scripts %}
 
