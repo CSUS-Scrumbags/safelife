@@ -60,7 +60,9 @@
           <div class="col-lg-5">
             <div class="card bg-secondary shadow border-0">
               <div class="card-header p-3 mb-2 bg-dark pt-5">
-                
+              {% if form.errors %}
+              <h3 style = "text-align: center;color:#FFFFFF;"> Username or Password is not correct. </h3>
+              {% endif %}
               <div class="card-body px-lg-5 py-lg-5" method = "POST">
                 <div class="text-center text-muted mb-4">
                   <small>Sign in with credentials</small>
