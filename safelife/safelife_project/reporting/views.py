@@ -63,7 +63,7 @@ def index(request):
 
                 teacher_student_count = cursor.fetchall()
 
-    # Create a template using index.html, and pass into it the list of student names and recorded absences 
+    # Create a template using index.html, and pass into it the list of student names and recorded absences
     template = loader.get_template('index.html')
     if super is True:
         teacher_current_courses = Course.objects.select_related().raw('SELECT * '
@@ -119,6 +119,14 @@ def report(request, course_id, month):
         all_dates = Course.objects.select_related().raw('SELECT * '
                                                         'FROM classes '
                                                         'WHERE course_id = %s ', [course_id])
+        template = loader.get_template('AdminReport.html')
+        context = {
+            'course_name': class_name,
+            'all_dates': all_dates,
+            'class_dates': class_dates,
+            'all_students': all_students,
+            'status': status
+        }
     else:
         all_students = Student.objects.select_related().raw('SELECT * '
                                                             'FROM students as S, classes as CL, attendances as A '
@@ -132,7 +140,7 @@ def report(request, course_id, month):
                                                       'WHERE CL.course_id = %s '
                                                       'AND CL.course_id = A.classes '
                                                       'AND MONTH(CL.date) = %s '
-                                                      'AND CL.date = A.date '
+                                                  'AND CL.date = A.date '
                                                       'GROUP BY A.id '
                                                       'ORDER BY A.date ', [course_id, month])
 
@@ -140,18 +148,17 @@ def report(request, course_id, month):
                                                         'FROM classes '
                                                         'WHERE course_id = %s '
                                                         'AND MONTH(date) = %s', [course_id, month])
+        template = loader.get_template('TeacherReport.html')
+        context = {
+            'course_name': class_name,
+            'all_dates': all_dates,
+            'class_dates': class_dates,
+            'all_students': all_students,
+            'status': status
+        }
 
-    template = loader.get_template('reports.html')
-    context = {
-        'course_name': class_name,
-        'all_dates': all_dates,
-        'class_dates': class_dates,
-        'all_students': all_students,
-        'status': status
-    }
-    
     # Render the template to the user
-    return render(request, "reports.html", context)
+    return render(request, "AdminReport.html", context)
 
 
 def student(request, course_id):
@@ -174,7 +181,7 @@ def student(request, course_id):
                                                     'FROM classes, courses as C '
                                                     'WHERE C.course_id = %s ', [course_id])
 
-    template = loader.get_template('reports.html')
+    template = loader.get_template('AdminReport.html')
     context = {
         'all_dates': all_dates,
         'class_dates': class_dates,
@@ -183,4 +190,4 @@ def student(request, course_id):
     }
     
     # Render the template to the user
-    return render(request, "reports.html", context)
+    return render(request, "AdminReport.html", context)
