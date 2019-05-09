@@ -57,17 +57,19 @@ def index(request):
     
     with connection.cursor() as cursor:
                 cursor.execute('SELECT CS.course_id, COUNT(CS.students_id) '
-                        'FROM course_students as CS '
-                        'GROUP BY CS.course_id ')
+                               'FROM course_teachers as CT, course_students as CS '
+                               'WHERE CT.teachers_id = %s AND CT.course_id = CS.course_id '
+                               'GROUP BY CS.course_id ', [current_user])
 
                 teacher_student_count = cursor.fetchall()
 
-    # Create a template using index.html, and pass into it the list of student names and recorded absences
-    template = loader.get_template('index.html')
+    # Create a template using AdminAttendanceIndex.html, and pass into it the list of student names and recorded absences
+
     if super is True:
         teacher_current_courses = Course.objects.select_related().raw('SELECT * '
                                                                       'FROM courses as C '
                                                                       'WHERE C.is_complete = 0')
+        template = loader.get_template('AdminIndex.html')
         context = {
             'all_courses': all_courses,
             'all_students': all_students,
@@ -84,6 +86,7 @@ def index(request):
                                                                       'WHERE CT.teachers_id = %s '
                                                                       'AND C.course_id = CT.course_id '
                                                                       'AND C.is_complete = 0 ', [current_user])
+        template = loader.get_template('TeacherIndex.html')
         context = {
             'all_courses': all_courses,
             'all_students': all_students,
@@ -100,6 +103,11 @@ def index(request):
 def report(request, course_id, month):
     class_dates = Class.objects.filter(course=course_id)
     class_name = Course.objects.get(course_id=course_id)
+
+    if super is True:
+        template = loader.get_template('AdminReport.html')
+    else:
+        template = loader.get_template('TeacherReport.html')
 
     if month is 0:
         all_students = Student.objects.select_related().raw('SELECT * '
@@ -118,7 +126,6 @@ def report(request, course_id, month):
         all_dates = Course.objects.select_related().raw('SELECT * '
                                                         'FROM classes '
                                                         'WHERE course_id = %s ', [course_id])
-        template = loader.get_template('AdminReport.html')
         context = {
             'course_name': class_name,
             'all_dates': all_dates,
@@ -147,7 +154,6 @@ def report(request, course_id, month):
                                                         'FROM classes '
                                                         'WHERE course_id = %s '
                                                         'AND MONTH(date) = %s', [course_id, month])
-        template = loader.get_template('TeacherReport.html')
         context = {
             'course_name': class_name,
             'all_dates': all_dates,
@@ -157,36 +163,4 @@ def report(request, course_id, month):
         }
 
     # Render the template to the user
-    return render(request, "AdminReport.html", context)
-
-
-def student(request, course_id):
-    class_dates = Class.objects.filter(course=course_id)
-    # Get all the students in the class
-    all_students = Student.objects.select_related().raw('SELECT * '
-                                                        'FROM students as S, classes as CL, attendances as A '
-                                                        'WHERE CL.course_id = %s AND S.student_id = A.students '
-                                                        'AND CL.course_id = A.classes AND CL.date = A.date '
-                                                        'GROUP BY student_name', [course_id])
-
-    status = Student.objects.select_related().raw('SELECT    * '
-                                                  'FROM students as S, classes as CL, attendances as A '
-                                                  'WHERE CL.course_id = %s AND CL.course_id = A.classes '
-                                                  'AND CL.date = A.date '
-                                                  'GROUP BY A.id '
-                                                  'ORDER BY A.date', [course_id])
-
-    all_dates = Course.objects.select_related().raw('SELECT date '
-                                                    'FROM classes, courses as C '
-                                                    'WHERE C.course_id = %s ', [course_id])
-
-    template = loader.get_template('AdminReport.html')
-    context = {
-        'all_dates': all_dates,
-        'class_dates': class_dates,
-        'all_students': all_students,
-        'status': status
-    }
-    
-    # Render the template to the user
-    return render(request, "AdminReport.html", context)
+    return HttpResponse(template.render(context, request))
