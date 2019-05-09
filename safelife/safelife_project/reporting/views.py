@@ -57,9 +57,8 @@ def index(request):
     
     with connection.cursor() as cursor:
                 cursor.execute('SELECT CS.course_id, COUNT(CS.students_id) '
-                               'FROM course_teachers as CT, course_students as CS '
-                               'WHERE CT.teachers_id = %s AND CT.course_id = CS.course_id '
-                               'GROUP BY CS.course_id ', [current_user])
+                        'FROM course_students as CS '
+                        'GROUP BY CS.course_id ')
 
                 teacher_student_count = cursor.fetchall()
 
