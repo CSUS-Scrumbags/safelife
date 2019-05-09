@@ -101,6 +101,7 @@ def index(request):
 
 
 def report(request, course_id, month):
+    super = request.user.is_superuser
     class_dates = Class.objects.filter(course=course_id)
     class_name = Course.objects.get(course_id=course_id)
 
