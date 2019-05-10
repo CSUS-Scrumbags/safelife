@@ -19,6 +19,10 @@ def index(request, course_id, date):
                        'FROM courses '
                        'WHERE course_id = %s', [course_id])
         course_name = cursor.fetchone()
+    if super is True:
+        template = loader.get_template('AdminAttendanceIndex.html')
+    else:
+        template = loader.get_template('TeacherAttendanceIndex.html')
     if attendance_status is not None or super is True:
         # Get the current date in the following format: <4 Digit Year>-<2 Digit Month>-<2 Digit Day>
         currentdate = datetime.datetime.strptime(date, '%B %d, %Y').strftime('%Y-%m-%d')
@@ -37,11 +41,8 @@ def index(request, course_id, date):
                                                                [course_id, currentdate])
         class_dates = Class.objects.filter(course=course_id)
         currentdate = datetime.datetime.strptime(currentdate, '%Y-%m-%d').strftime('%B %d, %Y')
-        # Create a template using index.html, and pass into it the list of student names and recorded absences
-        if super is True:
-            template = loader.get_template('AdminIndex.html')
-        else:
-            template = loader.get_template('index.html')
+        # Create a template using AdminAttendanceIndex.html, and pass into it the list of student names and recorded absences
+
         context = {
             'course_name': course_name[0],
             'current_date': currentdate,
@@ -49,13 +50,10 @@ def index(request, course_id, date):
             'all_students': all_students,
             'absent_students': absent_students
         }
-
-        # Render the template to the user
-        return HttpResponse(template.render(context, request))
     else:
-        template = loader.get_template('index2.html')
+        template = loader.get_template('AttendanceError.html')
         context = { }
-        return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))
 
 
 def update_student(request, course_id, date):
@@ -88,7 +86,7 @@ def update_student(request, course_id, date):
                            'SET status = "Present" '
                            'WHERE students = %s AND date = %s ', [student_data.student_id, currentdate])
     # Render the response to the user
-    return render(request, 'index.html', {})
+    return render(request, 'TeacherAttendanceIndex.html', {})
 
 
 def update_student_absent(request, course_id, date):
@@ -125,4 +123,4 @@ def update_student_absent(request, course_id, date):
                            'SET status = "Absent" '
                            'WHERE students = %s AND date = %s ', [student_data.student_id, date])
     # Render the response to the user
-    return render(request, 'index.html', {})
+    return render(request, 'TeacherAttendanceIndex.html', {})

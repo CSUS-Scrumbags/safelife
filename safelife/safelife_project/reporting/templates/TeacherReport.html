@@ -1,12 +1,12 @@
-{% extends "administrator/base.html" %}
+{% extends "teacher/base.html" %}
+{% load staticfiles %}
 {% block metadata %}
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 {% endblock metadata %}
 {% block topbar %}
-<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./">Reporting</a>
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./">Dashboard</a>
 {% endblock topbar %}
 {% block header %}
-<div class="header bg-gradient-indigo pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-teal pb-8 pt-5 pt-md-8">
    <div class="container-fluid d-flex align-items-center">
       <div class="row">
          <div class="col-lg-7 col-md-10">
@@ -42,7 +42,7 @@
             <tr>
                <th scope="row">
                   <div class="media-body">
-                     <a href="/{{students.student_id}}/" class="mb-0 text-sm">{{students.student_name}} </a>
+                     <a class="mb-0 text-sm">{{students.student_name}} </a>
                   </div>
                </th>
                {% for date in status %}
