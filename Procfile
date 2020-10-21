@@ -1,1 +1,1 @@
-web: gunicorn ProjectName.wsgi:application --log-file -
+web: gunicorn safelife_project.wsgi:application --log-file -
