@@ -1,3 +1,3 @@
-web: gunicorn safelife.wsgi:application --log-file - --log-level debug
+web: gunicorn safelife_project.wsgi:application --log-file - --log-level debug
 python manage.py collectstatic --noinput
 manage.py migrate
